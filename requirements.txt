@@ -6,3 +6,4 @@ spacy
 pypdf
 openai
 python-dotenv
+psycopg2-binary
