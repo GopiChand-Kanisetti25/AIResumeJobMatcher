@@ -1,8 +1,20 @@
 from fastapi import APIRouter
 from app.skills import extract_skills
-from app.ai_service import generate_ai_summary
+from app.ai_service import generate_ai_summary, generate_interview_questions
 
 router = APIRouter()
+
+
+@router.post("/job-description")
+def add_job_description(job_description: str):
+
+    required_skills = extract_skills(job_description)
+
+    return {
+        "message": "Job description received successfully",
+        "job_description": job_description,
+        "required_skills": required_skills
+    }
 
 
 @router.post("/job-match")
@@ -27,6 +39,8 @@ def job_match(resume_text: str, job_description: str):
         "matched_skills": matched_skills,
         "missing_skills": missing_skills
     }
+
+
 @router.post("/ai-summary")
 def ai_summary(resume_text: str):
 
@@ -34,4 +48,14 @@ def ai_summary(resume_text: str):
 
     return {
         "summary": summary
+    }
+
+
+@router.post("/interview-questions")
+def interview_questions(resume_text: str):
+
+    questions = generate_interview_questions(resume_text)
+
+    return {
+        "interview_questions": questions
     }
