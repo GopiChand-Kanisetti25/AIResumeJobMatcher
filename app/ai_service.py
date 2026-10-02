@@ -21,3 +21,18 @@ def generate_ai_summary(resume_text):
     )
 
     return response.output_text
+
+
+def generate_interview_questions(resume_text):
+    response = client.responses.create(
+        model="gpt-6-luna",
+        input=f"""
+        Based on this resume, generate 5 technical interview questions
+        suitable for the candidate.
+
+        Resume:
+        {resume_text}
+        """
+    )
+
+    return response.output_text
